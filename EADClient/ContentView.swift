@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
   @State private var isPresentating: Bool = true
   @State private var show = false
+  @State private var viewState = CGSize.zero
   
   var body: some View {
     ZStack {
@@ -24,6 +25,7 @@ struct ContentView: View {
         .cornerRadius(20)
         .shadow(radius: 20)
         .offset(x:0, y: show ? -400 : -40)
+        .offset(x: viewState.width, y: viewState.height)
         .scaleEffect(0.9)
         .rotationEffect(.degrees(show ? 0 : 10))
         .rotation3DEffect(.degrees(10), axis: (x: 10.0, y: 0.0, z: 0.0))
@@ -35,6 +37,7 @@ struct ContentView: View {
         .cornerRadius(20)
         .shadow(radius: 20)
         .offset(x:0, y: show ? -200 : -20)
+        .offset(x: viewState.width, y: viewState.height)
         .scaleEffect(0.95)
         .rotationEffect(Angle(degrees: show ? 0 : 5))
         .rotation3DEffect(.degrees(5), axis: (x: 10.0, y: 0.0, z: 0.0))
@@ -43,10 +46,22 @@ struct ContentView: View {
       
       // MARK: Front Card
       CardView()
+        .offset(x: viewState.width, y: viewState.height)
         .blendMode(.hardLight)
+        .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: viewState)
         .onTapGesture {
           show.toggle()
         }
+        .gesture(
+          DragGesture().onChanged { value in
+            viewState = value.translation
+            show = true
+          }
+            .onEnded({ value in
+              viewState = .zero
+              show = false
+            })
+        )
         
       // MARK: Bottom Card (Bottom Sheet)
           BottomCardView()
