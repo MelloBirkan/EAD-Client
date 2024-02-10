@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+  @State private var isPresentating: Bool = true
   var body: some View {
     ZStack {
+      // MARK: Title & background image
+      TitleView()
+        .blur(radius: 20)
+      
       // MARK: Background Card
       BackCardView()
         .background(Color.card4)
@@ -35,7 +40,11 @@ struct ContentView: View {
       // MARK: Front Card
       CardView()
         .blendMode(.hardLight)
-      
+        
+      // MARK: Bottom Card (Bottom Sheet)
+        .sheet(isPresented: $isPresentating) {
+          BottomCardView()
+        }
     }
   }
 }
@@ -81,5 +90,41 @@ struct BackCardView: View {
     }
     .frame(width: 340, height: 220)
     
+  }
+}
+
+struct TitleView: View {
+  var body: some View {
+    VStack {
+      HStack {
+        Text("Certificates")
+          .font(.largeTitle)
+          .bold()
+        Spacer()
+      }
+      .padding()
+      Image(.background1)
+      Spacer()
+    }
+  }
+}
+
+struct BottomCardView: View {
+  var body: some View {
+    VStack(spacing: 20) {
+      Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
+        .multilineTextAlignment(.center)
+        .font(.subheadline)
+        .lineSpacing(4)
+      Spacer() // Para usar o maximo de altura
+    }
+    .padding(.top, 25)
+    .padding(.horizontal, 20)
+    .cornerRadius(30)
+    .shadow(radius: 20)
+    //          .offset(x: 0, y: 500)
+    .presentationDetents([.fraction(0.35), .large])
+    .presentationDragIndicator(.visible)
+    .interactiveDismissDisabled(true)
   }
 }
