@@ -9,42 +9,49 @@ import SwiftUI
 
 struct ContentView: View {
   @State private var isPresentating: Bool = true
+  @State private var show = false
+  
   var body: some View {
     ZStack {
       // MARK: Title & background image
       TitleView()
-        .blur(radius: 20)
+        .blur(radius: show ? 20 : 0)
+        .animation(.default, value: show)
       
       // MARK: Background Card
       BackCardView()
-        .background(Color.card4)
+        .background(show ? Color.card3 : Color.card4)
         .cornerRadius(20)
         .shadow(radius: 20)
-        .offset(x:0, y: -40)
+        .offset(x:0, y: show ? -400 : -40)
         .scaleEffect(0.9)
-        .rotationEffect(.degrees(10))
+        .rotationEffect(.degrees(show ? 0 : 10))
         .rotation3DEffect(.degrees(10), axis: (x: 10.0, y: 0.0, z: 0.0))
         .blendMode(.hardLight)
-      
+        .animation(.easeInOut(duration: 0.4), value: show)
       
       BackCardView()
-        .background(Color.card3)
+        .background(show ? Color.card4 : Color.card3)
         .cornerRadius(20)
         .shadow(radius: 20)
-        .offset(x:0, y: -20)
+        .offset(x:0, y: show ? -200 : -20)
         .scaleEffect(0.95)
-        .rotationEffect(Angle(degrees: 5))
+        .rotationEffect(Angle(degrees: show ? 0 : 5))
         .rotation3DEffect(.degrees(5), axis: (x: 10.0, y: 0.0, z: 0.0))
         .blendMode(.hardLight)
+        .animation(.easeInOut(duration: 0.3), value: show)
       
       // MARK: Front Card
       CardView()
         .blendMode(.hardLight)
+        .onTapGesture {
+          show.toggle()
+        }
         
       // MARK: Bottom Card (Bottom Sheet)
-        .sheet(isPresented: $isPresentating) {
           BottomCardView()
-        }
+        .blur(radius: show ? 20 : 0)
+        .animation(.default, value: show)
     }
   }
 }
@@ -112,19 +119,22 @@ struct TitleView: View {
 struct BottomCardView: View {
   var body: some View {
     VStack(spacing: 20) {
+      Rectangle()
+        .frame(width: 40, height: 5)
+        .cornerRadius(3)
+        .opacity(0.1)
       Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
         .multilineTextAlignment(.center)
         .font(.subheadline)
         .lineSpacing(4)
-      Spacer() // Para usar o maximo de altura
+      Spacer()
     }
-    .padding(.top, 25)
+    .padding(.top, 8)
     .padding(.horizontal, 20)
+    .frame(maxWidth: .infinity)
+    .background(Color.white)
     .cornerRadius(30)
     .shadow(radius: 20)
-    //          .offset(x: 0, y: 500)
-    .presentationDetents([.fraction(0.35), .large])
-    .presentationDragIndicator(.visible)
-    .interactiveDismissDisabled(true)
+    .offset(x: 0, y: 540)
   }
 }
