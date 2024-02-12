@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var isPresentating: Bool = true
+  @State private var showCard: Bool = false
   @State private var show = false
   @State private var viewState = CGSize.zero
   
@@ -17,40 +17,60 @@ struct ContentView: View {
       // MARK: Title & background image
       TitleView()
         .blur(radius: show ? 20 : 0)
-        .animation(.default, value: show)
+        .opacity(showCard ? 0.4 : 1)
+        .offset(y: showCard ? -100 : 0)
+        .animation(Animation
+          .default
+          .delay(0.1)
+//          .speed(2)
+//          .repeatForever()
+                   , value: showCard)
+        .animation(.easeInOut, value: viewState)
       
       // MARK: Background Card
       BackCardView()
+        .frame(width: showCard ? 300 : 340, height: 220)
         .background(show ? Color.card3 : Color.card4)
         .cornerRadius(20)
         .shadow(radius: 20)
         .offset(x:0, y: show ? -400 : -40)
         .offset(x: viewState.width, y: viewState.height)
-        .scaleEffect(0.9)
+        .offset(y: showCard ? -180 : 0)
+        .scaleEffect(showCard ? 1 : 0.9)
         .rotationEffect(.degrees(show ? 0 : 10))
-        .rotation3DEffect(.degrees(10), axis: (x: 10.0, y: 0.0, z: 0.0))
+        .rotationEffect(Angle(degrees: showCard ? -10 : 0))
+        .rotation3DEffect(.degrees(showCard ? 0 : 10), axis: (x: 10.0, y: 0.0, z: 0.0))
         .blendMode(.hardLight)
-        .animation(.easeInOut(duration: 0.4), value: show)
+        .animation(.easeInOut(duration: 0.4), value: [show, showCard])
       
       BackCardView()
+        .frame(width: 340, height: 220)
         .background(show ? Color.card4 : Color.card3)
         .cornerRadius(20)
         .shadow(radius: 20)
         .offset(x:0, y: show ? -200 : -20)
         .offset(x: viewState.width, y: viewState.height)
-        .scaleEffect(0.95)
+        .offset(y: showCard ? -140 : 0)
+        .scaleEffect(showCard ? 1 : 0.95)
         .rotationEffect(Angle(degrees: show ? 0 : 5))
-        .rotation3DEffect(.degrees(5), axis: (x: 10.0, y: 0.0, z: 0.0))
+        .rotationEffect(Angle(degrees: showCard ? -5 : 0))
+        .rotation3DEffect(.degrees(showCard ? 0 : 5), axis: (x: 10.0, y: 0.0, z: 0.0))
         .blendMode(.hardLight)
-        .animation(.easeInOut(duration: 0.3), value: show)
+        .animation(.easeInOut(duration: 0.4), value: [show, showCard])
       
       // MARK: Front Card
       CardView()
+        .frame(width: showCard ? 375 : 340, height: 220)
+        .background(Color.black)
+//        .cornerRadius(20)
+        .clipShape(RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous))
+        .shadow(radius: 20)
         .offset(x: viewState.width, y: viewState.height)
+        .offset(y: showCard ? -100 : 0)
         .blendMode(.hardLight)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: viewState)
+        .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: [ showCard])
         .onTapGesture {
-          show.toggle()
+          showCard.toggle()
         }
         .gesture(
           DragGesture().onChanged { value in
@@ -64,9 +84,12 @@ struct ContentView: View {
         )
         
       // MARK: Bottom Card (Bottom Sheet)
-          BottomCardView()
-        .blur(radius: show ? 20 : 0)
-        .animation(.default, value: show)
+      // MARK: Bottom Card (Bottom Sheet)
+               .sheet(isPresented: $showCard) {
+                 BottomCardView()
+               }
+//        .blur(radius: show ? 20 : 0)
+//        .animation(.default, value: show)
     }
   }
 }
@@ -98,10 +121,7 @@ struct CardView: View {
         .aspectRatio(contentMode: .fill)
         .frame(width: 300, height: 110, alignment: .top)
     }
-    .frame(width: 340, height: 220)
-    .background(Color.black)
-    .cornerRadius(20)
-    .shadow(radius: 20)
+    
   }
 }
 
@@ -110,7 +130,7 @@ struct BackCardView: View {
     VStack {
       Spacer()
     }
-    .frame(width: 340, height: 220)
+    
     
   }
 }
@@ -132,24 +152,21 @@ struct TitleView: View {
 }
 
 struct BottomCardView: View {
-  var body: some View {
-    VStack(spacing: 20) {
-      Rectangle()
-        .frame(width: 40, height: 5)
-        .cornerRadius(3)
-        .opacity(0.1)
-      Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
-        .multilineTextAlignment(.center)
-        .font(.subheadline)
-        .lineSpacing(4)
-      Spacer()
-    }
-    .padding(.top, 8)
-    .padding(.horizontal, 20)
-    .frame(maxWidth: .infinity)
-    .background(Color.white)
-    .cornerRadius(30)
-    .shadow(radius: 20)
-    .offset(x: 0, y: 540)
-  }
-}
+   var body: some View {
+     VStack(spacing: 20) {
+       Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
+         .multilineTextAlignment(.center)
+         .font(.subheadline)
+         .lineSpacing(4)
+       Spacer() // Para usar o maximo de altura
+     }
+     .padding(.top, 25)
+     .padding(.horizontal, 20)
+     .cornerRadius(30)
+     .shadow(radius: 20)
+     //          .offset(x: 0, y: 500)
+     .presentationDetents([.fraction(0.45), .large])
+     .presentationDragIndicator(.visible)
+//     .interactiveDismissDisabled(true)
+   }
+ }
