@@ -22,8 +22,8 @@ struct ContentView: View {
         .animation(Animation
           .default
           .delay(0.1)
-//          .speed(2)
-//          .repeatForever()
+                   //          .speed(2)
+                   //          .repeatForever()
                    , value: showCard)
         .animation(.easeInOut, value: viewState)
       
@@ -62,7 +62,7 @@ struct ContentView: View {
       CardView()
         .frame(width: showCard ? 375 : 340, height: 220)
         .background(Color.black)
-//        .cornerRadius(20)
+      //        .cornerRadius(20)
         .clipShape(RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous))
         .shadow(radius: 20)
         .offset(x: viewState.width, y: viewState.height)
@@ -82,14 +82,14 @@ struct ContentView: View {
               show = false
             })
         )
-        
+      
       // MARK: Bottom Card (Bottom Sheet)
       // MARK: Bottom Card (Bottom Sheet)
-               .sheet(isPresented: $showCard) {
-                 BottomCardView()
-               }
-//        .blur(radius: show ? 20 : 0)
-//        .animation(.default, value: show)
+        .sheet(isPresented: $showCard) {
+          BottomCardView()
+        }
+      //        .blur(radius: show ? 20 : 0)
+      //        .animation(.default, value: show)
     }
   }
 }
@@ -152,21 +152,21 @@ struct TitleView: View {
 }
 
 struct BottomCardView: View {
-   var body: some View {
-     VStack(spacing: 20) {
-       Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
-         .multilineTextAlignment(.center)
-         .font(.subheadline)
-         .lineSpacing(4)
-       Spacer() // Para usar o maximo de altura
-     }
-     .padding(.top, 25)
-     .padding(.horizontal, 20)
-     .cornerRadius(30)
-     .shadow(radius: 20)
-     //          .offset(x: 0, y: 500)
-     .presentationDetents([.fraction(0.45), .large])
-     .presentationDragIndicator(.visible)
-//     .interactiveDismissDisabled(true)
-   }
- }
+  var body: some View {
+    VStack(spacing: 20) {
+      Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
+        .multilineTextAlignment(.center)
+        .font(.subheadline)
+        .lineSpacing(4)
+      Spacer() // Para usar o maximo de altura
+    }
+    .padding(.top, 25)
+    .padding(.horizontal, 20)
+    .cornerRadius(30)
+    .shadow(radius: 20)
+    //          .offset(x: 0, y: 500)
+    .presentationDetents([.fraction(0.45), .large])
+    .presentationDragIndicator(.visible)
+    //     .interactiveDismissDisabled(true)
+  }
+}
