@@ -26,8 +26,8 @@ struct HomeView: View {
         
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: 30) {
-            ForEach(0 ..< 3) { item in
-              SectionView()
+            ForEach(sectionData) { item in
+              SectionView(section: item)
             }
           }
           .padding(30)
@@ -44,19 +44,21 @@ struct HomeView: View {
 }
 
 struct SectionView: View {
+  var section: Section
+  
   var body: some View {
     VStack {
       HStack {
-        Text("Prototype designs in SwiftUI")
+        Text(section.title)
           .font(.system(size: 24, weight: .bold))
           .frame(width: 160, alignment: .leading)
           .foregroundStyle(.white)
         Spacer()
-        Image(.logo1)
+        section.logo
       }
-      Text("18 Sections".uppercased())
+      Text(section.text.uppercased())
         .frame(maxWidth: .infinity, alignment: .leading)
-      Image(.card1)
+      section.image
         .resizable()
         .aspectRatio(contentMode: .fit)
         .frame(width: 210)
@@ -64,8 +66,25 @@ struct SectionView: View {
     .padding(.top, 20)
     .padding(.horizontal, 20)
     .frame(width: 275, height: 275)
-    .background(Color.card1)
+    .background(section.color)
     .clipShape(RoundedRectangle(cornerRadius: 30))
-    .shadow(color: Color.card1.opacity(0.3), radius: 20, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 20)
+    .shadow(color: section.color.opacity(0.3), radius: 20, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 20)
   }
 }
+
+struct Section: Identifiable {
+  var id = UUID()
+  var title: String
+  var text: String
+  var logo: Image
+  var image: Image
+  var color: Color
+}
+
+let sectionData = [
+  Section(title: "Prototype designs in SwiftUI", text: "18 Sections", logo: Image(.logo2), image: Image(.card2), color: Color.card2),
+  Section(title: "Build a SwiftUI App", text: "21 Sections", logo: Image(.logo1), image: Image(.card1), color: Color.card1),
+  Section(title: "Build a React App", text: "17 Sections", logo: Image(.logo3), image: Image(.card3), color: Color.card3),
+]
+
+
