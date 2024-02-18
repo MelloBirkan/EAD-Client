@@ -16,6 +16,7 @@
 		1BC203BF2B7F5003007B640F /* UpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC203BE2B7F5003007B640F /* UpdateList.swift */; };
 		1BC203C12B7F553A007B640F /* UpdateDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC203C02B7F553A007B640F /* UpdateDetail.swift */; };
 		1BC203C32B7F59C7007B640F /* UpdateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC203C22B7F59C7007B640F /* UpdateStore.swift */; };
+		1BC203C52B8202A9007B640F /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC203C42B8202A9007B640F /* TabBar.swift */; };
 		1BCF1CB62B7B7C0200F6E3CD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCF1CB52B7B7C0200F6E3CD /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		1BC203BE2B7F5003007B640F /* UpdateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateList.swift; sourceTree = "<group>"; };
 		1BC203C02B7F553A007B640F /* UpdateDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDetail.swift; sourceTree = "<group>"; };
 		1BC203C22B7F59C7007B640F /* UpdateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStore.swift; sourceTree = "<group>"; };
+		1BC203C42B8202A9007B640F /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		1BCF1CB52B7B7C0200F6E3CD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,6 +49,7 @@
 		1B4D54142B77304400F642A4 = {
 			isa = PBXGroup;
 			children = (
+				1BC203C42B8202A9007B640F /* TabBar.swift */,
 				1BC203C22B7F59C7007B640F /* UpdateStore.swift */,
 				1B4D541F2B77304400F642A4 /* EADClient */,
 				1B4D541E2B77304400F642A4 /* Products */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BC203C52B8202A9007B640F /* TabBar.swift in Sources */,
 				1BC203C12B7F553A007B640F /* UpdateDetail.swift in Sources */,
 				1B4D54232B77304400F642A4 /* ContentView.swift in Sources */,
 				1B82DEBC2B7A014F001D5A0D /* MenuView.swift in Sources */,
